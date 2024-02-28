@@ -4,16 +4,20 @@ const playAgainBtn = document.getElementById('play-button');
 const popup = document.getElementById('popup-container');
 const notification = document.getElementById('notification-container');
 const finalMessage = document.getElementById('final-message');
-const conteo=document.getElementById('conteo');
+const conteo = document.getElementById('conteo');
 const figureParts = document.querySelectorAll('.part');
-const timer=document.querySelector('.timer');
-const notes=document.getElementById('notes');
-const fail= new Audio('./audios/fail.mp3');
-const Ale= new Audio('./audios/Ale.mp3');
-const losing= new Audio('./audios/perder.mp3');
-for( audio of[fail, Ale,losing]){
-  audio.volume=0.5
+const timer = document.querySelector('.timer');
+const notes = document.getElementById('notes');
+const fail = new Audio('./audios/fail.mp3');
+const Ale = new Audio('./audios/Ale.mp3');
+const losing = new Audio('./audios/perder.mp3');
+for (audio of [fail, Ale, losing]) {
+  audio.volume = 0.5
 }
+
+const attemptsEl = document.getElementById('attempts');
+var attempts = 5;
+attemptsEl.innerHTML = `Intentos: ${attempts}`;
 
 const words = [
   'Titanic',
@@ -39,10 +43,10 @@ const words = [
 ];
 const correctLetters = [];
 const wrongLetters = [];
-wordEl.style.display="flex";
-wordEl.style.flexDirection='row';
-wordEl.style.justifyContent='center';
-wordEl.style.alignItems='center';
+wordEl.style.display = "flex";
+wordEl.style.flexDirection = 'row';
+wordEl.style.justifyContent = 'center';
+wordEl.style.alignItems = 'center';
 let selectedWord = words[Math.floor(Math.random() * words.length)].toLowerCase();
 // Show hidden word
 function displayWord() {
@@ -116,14 +120,16 @@ window.addEventListener('keydown', e => {
       if (!wrongLetters.includes(letter)) {
         wrongLetters.push(letter);
         updateWrongLettersEl();
-        for( let i=0;i<figureParts.length;i++){
+        for (let i = 0; i < figureParts.length; i++) {
           figureParts[i].classList.add('turn')
         }
+        attempts--;
       } else {
         showNotification();
       }
     }
   }
+  attemptsEl.innerHTML = `Intentos: ${attempts}`;
 });
 
 // Restart game and play again
@@ -136,6 +142,8 @@ playAgainBtn.addEventListener('click', () => {
   displayWord();
   updateWrongLettersEl();
   popup.style.display = 'none';
+  attempts = 5;
+  attemptsEl.innerHTML = `Intentos: ${attempts}`;
 });
 displayWord();
 // Timer();
