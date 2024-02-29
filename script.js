@@ -594,4 +594,4 @@ playAgainBtn.addEventListener('click', () => {
   attemptsEl.innerHTML = `Intentos: ${attempts}`;
 });
 displayWord();
-// Timer();
+// Timer();99b3
